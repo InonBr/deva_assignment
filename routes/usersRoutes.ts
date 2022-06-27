@@ -4,6 +4,8 @@ import authMiddleware from "../middleware/authMiddleware";
 import axios from "axios";
 import { stringify } from "flatted";
 import _ from "lodash";
+import dtoValidationMiddleware from "../middleware/dtoValidationMiddleware";
+import { FavoritesDto } from "./DTO/favoritesDto";
 
 const router = Router();
 
@@ -34,5 +36,31 @@ router.get("/tokens/:sortingMethod", authMiddleware, async (req, res) => {
 
   res.send(stringify(data.data));
 });
+
+router.get("/user/:userId/favorites", authMiddleware, async (req, res) => {
+  const userId = req.params.userId;
+
+  const user = await User.findById(userId);
+
+  res.send(user.favorites);
+});
+
+router.post(
+  "/user/:userId/favorites",
+  authMiddleware,
+  dtoValidationMiddleware(FavoritesDto),
+  async (req, res) => {
+    const userId = req.params.userId;
+    const newFavoritesEntry: FavoritesDto = req.body;
+
+    const user = await User.findById(userId);
+
+    await User.findByIdAndUpdate(userId, {
+      favorites: [...user.favorites, newFavoritesEntry],
+    });
+
+    res.status(201).send(newFavoritesEntry);
+  }
+);
 
 export default router;

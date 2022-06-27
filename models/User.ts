@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
 
 const UserFavoritesSchema = new mongoose.Schema({
-  id: {
-    type: Number,
-    required: true,
-  },
   name: {
     required: true,
     type: String,
