@@ -17,8 +17,6 @@ const authMiddleware = (req, res, next) => {
         .send({ auth: false, message: "Failed to authenticate token." });
     }
 
-    console.log(decoded);
-
     req.currentUser = decoded;
     next();
   });

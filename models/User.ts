@@ -1,5 +1,20 @@
 import mongoose from "mongoose";
 
+const UserFavoritesSchema = new mongoose.Schema({
+  id: {
+    type: Number,
+    required: true,
+  },
+  name: {
+    required: true,
+    type: String,
+  },
+  price: {
+    required: true,
+    type: Number,
+  },
+});
+
 const UserSchema = new mongoose.Schema({
   firstName: {
     required: true,
@@ -15,7 +30,7 @@ const UserSchema = new mongoose.Schema({
   },
   favorites: {
     required: true,
-    type: Array,
+    type: [UserFavoritesSchema],
   },
 });
 
