@@ -1,0 +1,8 @@
+{
+  "name": "deva",
+  "version": "1.0.0",
+  "main": "server.ts",
+  "repository": "git@github.com:InonBr/deva_assignment.git",
+  "author": "Inon Bercu <inonbr@gmail.com>",
+  "license": "MIT"
+}
