@@ -63,4 +63,24 @@ router.post(
   }
 );
 
+router.delete(
+  "/user/:userId/favorites/:favoriteId",
+  authMiddleware,
+  async (req, res) => {
+    const userId = req.params.userId;
+    const favoriteId = req.params.favoriteId;
+
+    const user = await User.findById(userId);
+
+    const newFavorites = user.favorites.filter(
+      (favorite: { _id: any; name: string; price: number }) =>
+        favorite._id.toHexString() !== favoriteId
+    );
+
+    await User.findByIdAndUpdate(userId, { favorites: newFavorites });
+
+    res.status(200).send();
+  }
+);
+
 export default router;
